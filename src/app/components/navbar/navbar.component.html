@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/books" (click)="closeMenu()">
+      <i class="fa-solid fa-book-open me-2"></i>BookQuote
+    </a>
+
+    <div class="d-flex align-items-center gap-2 d-lg-none">
+      <!-- Theme toggle for mobile -->
+      <button class="theme-toggle" (click)="toggleTheme()" *ngIf="authService.isLoggedIn$ | async">
+        <i class="fa-solid" [ngClass]="(themeService.isDark$ | async) ? 'fa-sun' : 'fa-moon'"></i>
+      </button>
+
+      <button class="navbar-toggler" type="button" (click)="toggleCollapse()"
+              aria-controls="navbarContent" [attr.aria-expanded]="!isCollapsed" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+
+    <div class="collapse navbar-collapse" [class.show]="!isCollapsed" id="navbarContent">
+      <ng-container *ngIf="authService.isLoggedIn$ | async">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/books" routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}" (click)="closeMenu()">
+              <i class="fa-solid fa-book me-1"></i> Books
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/quotes" routerLinkActive="active" (click)="closeMenu()">
+              <i class="fa-solid fa-quote-left me-1"></i> My Quotes
+            </a>
+          </li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-2">
+          <!-- Theme toggle for desktop -->
+          <button class="theme-toggle d-none d-lg-flex" (click)="toggleTheme()">
+            <i class="fa-solid" [ngClass]="(themeService.isDark$ | async) ? 'fa-sun' : 'fa-moon'"></i>
+          </button>
+
+          <button class="btn btn-outline-custom btn-sm" (click)="logout()">
+            <i class="fa-solid fa-right-from-bracket me-1"></i> Logout
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</nav>

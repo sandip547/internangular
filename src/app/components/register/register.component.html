@@ -1,0 +1,89 @@
+<div class="auth-container">
+  <div class="auth-card animate-in">
+
+    <!-- Theme toggle -->
+    <div class="text-end mb-3">
+      <button class="theme-toggle-auth" (click)="themeService.toggleTheme()">
+        <i class="fa-solid" [ngClass]="(themeService.isDark$ | async) ? 'fa-sun' : 'fa-moon'"></i>
+      </button>
+    </div>
+
+    <div class="text-center mb-2">
+      <div class="auth-icon">
+        <i class="fa-solid fa-user-plus"></i>
+      </div>
+    </div>
+
+    <h2>Create Account</h2>
+    <p class="subtitle">Join us and start managing your collection</p>
+
+    <!-- Error Alert -->
+    <div *ngIf="errorMessage" class="alert alert-danger alert-custom d-flex align-items-center" role="alert">
+      <i class="fa-solid fa-circle-exclamation me-2"></i>
+      {{ errorMessage }}
+    </div>
+
+    <!-- Success Alert -->
+    <div *ngIf="successMessage" class="alert alert-success alert-custom d-flex align-items-center" role="alert">
+      <i class="fa-solid fa-circle-check me-2"></i>
+      {{ successMessage }}
+    </div>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-6 mb-3">
+          <label for="firstName" class="form-label">
+            <i class="fa-solid fa-user me-1"></i> First Name
+          </label>
+          <input type="text" class="form-control" id="firstName" placeholder="First name"
+                 [(ngModel)]="user.firstName" name="firstName" required>
+        </div>
+        <div class="col-6 mb-3">
+          <label for="lastName" class="form-label">
+            <i class="fa-solid fa-user me-1"></i> Last Name
+          </label>
+          <input type="text" class="form-control" id="lastName" placeholder="Last name"
+                 [(ngModel)]="user.lastName" name="lastName" required>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">
+          <i class="fa-solid fa-envelope me-1"></i> Email
+        </label>
+        <input type="email" class="form-control" id="email" placeholder="Enter your email"
+               [(ngModel)]="user.email" name="email" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">
+          <i class="fa-solid fa-lock me-1"></i> Password
+        </label>
+        <input type="password" class="form-control" id="password" placeholder="Min. 6 characters"
+               [(ngModel)]="user.password" name="password" required>
+      </div>
+
+      <div class="mb-4">
+        <label for="confirmPassword" class="form-label">
+          <i class="fa-solid fa-lock me-1"></i> Confirm Password
+        </label>
+        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password"
+               [(ngModel)]="confirmPassword" name="confirmPassword" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary-custom w-100 py-2" [disabled]="isLoading">
+        <span *ngIf="!isLoading">
+          <i class="fa-solid fa-user-plus me-2"></i>Create Account
+        </span>
+        <span *ngIf="isLoading">
+          <i class="fa-solid fa-spinner fa-spin me-2"></i>Creating account...
+        </span>
+      </button>
+    </form>
+
+    <p class="text-center mt-3 mb-0" style="color: var(--text-secondary); font-size: 0.9rem;">
+      Already have an account?
+      <a routerLink="/login" class="fw-bold">Sign in</a>
+    </p>
+  </div>
+</div>

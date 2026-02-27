@@ -1,0 +1,100 @@
+<div class="content-wrapper">
+  <div class="container py-4 animate-in">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <h2>
+        <i class="fa-solid" [ngClass]="isEditMode ? 'fa-pen-to-square' : 'fa-plus'" class="text-accent me-2"></i>
+        {{ pageTitle }}
+      </h2>
+      <p>{{ isEditMode ? 'Update the book details below' : 'Fill in the details to add a new book' }}</p>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isFetching" class="text-center py-5">
+      <i class="fa-solid fa-spinner fa-spin fa-2x text-accent"></i>
+    </div>
+
+    <!-- Form -->
+    <div *ngIf="!isFetching" class="row justify-content-center">
+      <div class="col-12 col-lg-8">
+        <div class="card-custom p-4">
+
+          <!-- Error Alert -->
+          <div *ngIf="errorMessage" class="alert alert-danger alert-custom d-flex align-items-center mb-3">
+            <i class="fa-solid fa-circle-exclamation me-2"></i>
+            {{ errorMessage }}
+          </div>
+
+          <form (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-12 mb-3">
+                <label for="title" class="form-label">
+                  <i class="fa-solid fa-heading me-1"></i> Title
+                </label>
+                <input type="text" class="form-control" id="title" placeholder="Enter book title"
+                       [(ngModel)]="book.title" name="title" required>
+              </div>
+
+              <div class="col-12 col-md-6 mb-3">
+                <label for="author" class="form-label">
+                  <i class="fa-solid fa-user-pen me-1"></i> Author
+                </label>
+                <input type="text" class="form-control" id="author" placeholder="Enter author name"
+                       [(ngModel)]="book.author" name="author" required>
+              </div>
+
+              <div class="col-12 col-md-6 mb-3">
+                <label for="isbn" class="form-label">
+                  <i class="fa-solid fa-barcode me-1"></i> ISBN
+                </label>
+                <input type="text" class="form-control" id="isbn" placeholder="Enter ISBN"
+                       [(ngModel)]="book.isbn" name="isbn">
+              </div>
+
+              <div class="col-12 col-md-4 mb-3">
+                <label for="price" class="form-label">
+                  <i class="fa-solid fa-dollar-sign me-1"></i> Price
+                </label>
+                <input type="number" class="form-control" id="price" placeholder="0.00" step="0.01"
+                       [(ngModel)]="book.price" name="price">
+              </div>
+
+              <div class="col-12 col-md-4 mb-3">
+                <label for="publishedDate" class="form-label">
+                  <i class="fa-regular fa-calendar me-1"></i> Published Date
+                </label>
+                <input type="date" class="form-control" id="publishedDate"
+                       [(ngModel)]="book.publishedDate" name="publishedDate">
+              </div>
+
+              <div class="col-12 col-md-4 mb-3">
+                <label for="pages" class="form-label">
+                  <i class="fa-solid fa-file-lines me-1"></i> Pages
+                </label>
+                <input type="number" class="form-control" id="pages" placeholder="0"
+                       [(ngModel)]="book.pages" name="pages">
+              </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-2">
+              <button type="submit" class="btn btn-primary-custom" [disabled]="isLoading">
+                <span *ngIf="!isLoading">
+                  <i class="fa-solid" [ngClass]="isEditMode ? 'fa-floppy-disk' : 'fa-plus'"></i>
+                  {{ isEditMode ? ' Save Changes' : ' Add Book' }}
+                </span>
+                <span *ngIf="isLoading">
+                  <i class="fa-solid fa-spinner fa-spin me-1"></i>Saving...
+                </span>
+              </button>
+              <button type="button" class="btn btn-outline-custom" (click)="cancel()">
+                <i class="fa-solid fa-xmark me-1"></i>Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

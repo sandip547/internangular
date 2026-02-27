@@ -1,0 +1,68 @@
+<div class="content-wrapper">
+  <div class="container py-4 animate-in">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <h2>
+        <i class="fa-solid" [ngClass]="isEditMode ? 'fa-pen-to-square' : 'fa-plus'" class="text-accent me-2"></i>
+        {{ pageTitle }}
+      </h2>
+      <p>{{ isEditMode ? 'Update the quote below' : 'Add an inspiring quote to your collection' }}</p>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isFetching" class="text-center py-5">
+      <i class="fa-solid fa-spinner fa-spin fa-2x text-accent"></i>
+    </div>
+
+    <!-- Form -->
+    <div *ngIf="!isFetching" class="row justify-content-center">
+      <div class="col-12 col-lg-8">
+        <div class="card-custom p-4">
+
+          <!-- Error Alert -->
+          <div *ngIf="errorMessage" class="alert alert-danger alert-custom d-flex align-items-center mb-3">
+            <i class="fa-solid fa-circle-exclamation me-2"></i>
+            {{ errorMessage }}
+          </div>
+
+          <form (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="text" class="form-label">
+                <i class="fa-solid fa-quote-left me-1"></i> Quote Text
+              </label>
+              <textarea class="form-control" id="text" rows="4"
+                        placeholder="Enter the quote text..."
+                        [(ngModel)]="quote.text" name="text" required
+                        style="resize: vertical;"></textarea>
+            </div>
+
+            <div class="mb-4">
+              <label for="author" class="form-label">
+                <i class="fa-solid fa-user-pen me-1"></i> Author
+              </label>
+              <input type="text" class="form-control" id="author" placeholder="Who said this?"
+                     [(ngModel)]="quote.author" name="author" required>
+            </div>
+
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary-custom" [disabled]="isLoading">
+                <span *ngIf="!isLoading">
+                  <i class="fa-solid" [ngClass]="isEditMode ? 'fa-floppy-disk' : 'fa-plus'"></i>
+                  {{ isEditMode ? ' Save Changes' : ' Add Quote' }}
+                </span>
+                <span *ngIf="isLoading">
+                  <i class="fa-solid fa-spinner fa-spin me-1"></i>Saving...
+                </span>
+              </button>
+              <button type="button" class="btn btn-outline-custom" (click)="cancel()">
+                <i class="fa-solid fa-xmark me-1"></i>Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

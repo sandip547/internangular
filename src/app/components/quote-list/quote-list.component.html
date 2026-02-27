@@ -1,0 +1,75 @@
+<div class="content-wrapper">
+  <div class="container py-4 animate-in">
+
+    <!-- Page Header -->
+    <div class="page-header d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center">
+      <div class="mb-3 mb-sm-0">
+        <h2><i class="fa-solid fa-quote-left text-accent me-2"></i>My Quotes</h2>
+        <p>Your personal collection of inspiring quotes</p>
+      </div>
+      <button class="btn btn-primary-custom" (click)="addQuote()">
+        <i class="fa-solid fa-plus me-2"></i>Add New Quote
+      </button>
+    </div>
+
+    <!-- Success Alert -->
+    <div *ngIf="successMessage" class="alert alert-success alert-custom d-flex align-items-center">
+      <i class="fa-solid fa-circle-check me-2"></i>
+      {{ successMessage }}
+    </div>
+
+    <!-- Error Alert -->
+    <div *ngIf="errorMessage" class="alert alert-danger alert-custom d-flex align-items-center">
+      <i class="fa-solid fa-circle-exclamation me-2"></i>
+      {{ errorMessage }}
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="text-center py-5">
+      <i class="fa-solid fa-spinner fa-spin fa-2x text-accent"></i>
+      <p class="mt-2" style="color: var(--text-secondary)">Loading quotes...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && quotes.length === 0" class="card-custom">
+      <div class="empty-state">
+        <i class="fa-solid fa-quote-left"></i>
+        <h5>No quotes yet</h5>
+        <p>Start building your collection of favorite quotes.</p>
+        <button class="btn btn-primary-custom mt-2" (click)="addQuote()">
+          <i class="fa-solid fa-plus me-2"></i>Add Your First Quote
+        </button>
+      </div>
+    </div>
+
+    <!-- Quote Cards -->
+    <div *ngIf="!isLoading && quotes.length > 0">
+      <div class="row">
+        <div class="col-12 col-md-6" *ngFor="let quote of quotes; let i = index">
+          <div class="quote-card" [style.animation-delay]="(i * 0.08) + 's'" style="animation: fadeInUp 0.4s ease-out both;">
+            <div class="d-flex justify-content-between align-items-start">
+              <div class="flex-grow-1 me-3">
+                <p class="quote-text mb-2">"{{ quote.text }}"</p>
+                <p class="quote-author mb-0">
+                  <i class="fa-solid fa-minus me-2"></i>{{ quote.author }}
+                </p>
+              </div>
+              <div class="d-flex flex-column gap-1">
+                <button class="btn btn-sm btn-outline-custom" (click)="editQuote(quote.id)" title="Edit">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="btn btn-sm btn-danger-custom" (click)="deleteQuote(quote.id, quote.author)" title="Delete">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="quote.createdAt" class="mt-2" style="font-size: 0.75rem; color: var(--text-muted);">
+              <i class="fa-regular fa-clock me-1"></i>{{ quote.createdAt | date:'medium' }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

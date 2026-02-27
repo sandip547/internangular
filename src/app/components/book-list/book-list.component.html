@@ -1,0 +1,111 @@
+<div class="content-wrapper">
+  <div class="container py-4 animate-in">
+
+    <!-- Page Header -->
+    <div class="page-header d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center">
+      <div class="mb-3 mb-sm-0">
+        <h2><i class="fa-solid fa-book text-accent me-2"></i>My Books</h2>
+        <p>Manage your personal book collection</p>
+      </div>
+      <button class="btn btn-primary-custom" (click)="addBook()">
+        <i class="fa-solid fa-plus me-2"></i>Add New Book
+      </button>
+    </div>
+
+    <!-- Success Alert -->
+    <div *ngIf="successMessage" class="alert alert-success alert-custom d-flex align-items-center">
+      <i class="fa-solid fa-circle-check me-2"></i>
+      {{ successMessage }}
+    </div>
+
+    <!-- Error Alert -->
+    <div *ngIf="errorMessage" class="alert alert-danger alert-custom d-flex align-items-center">
+      <i class="fa-solid fa-circle-exclamation me-2"></i>
+      {{ errorMessage }}
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="text-center py-5">
+      <i class="fa-solid fa-spinner fa-spin fa-2x text-accent"></i>
+      <p class="mt-2" style="color: var(--text-secondary)">Loading books...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && books.length === 0" class="card-custom">
+      <div class="empty-state">
+        <i class="fa-solid fa-book-open"></i>
+        <h5>No books yet</h5>
+        <p>Click "Add New Book" to get started with your collection.</p>
+        <button class="btn btn-primary-custom mt-2" (click)="addBook()">
+          <i class="fa-solid fa-plus me-2"></i>Add Your First Book
+        </button>
+      </div>
+    </div>
+
+    <!-- Book Table (Desktop) -->
+    <div *ngIf="!isLoading && books.length > 0" class="card-custom d-none d-md-block">
+      <div class="table-responsive-custom">
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>ISBN</th>
+              <th>Price</th>
+              <th>Published</th>
+              <th>Pages</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let book of books">
+              <td>
+                <strong>{{ book.title }}</strong>
+              </td>
+              <td>{{ book.author }}</td>
+              <td><span class="badge-custom">{{ book.isbn }}</span></td>
+              <td>${{ book.price | number:'1.2-2' }}</td>
+              <td>{{ book.publishedDate | date:'mediumDate' }}</td>
+              <td>{{ book.pages }}</td>
+              <td class="text-end">
+                <button class="btn btn-sm btn-outline-custom me-1" (click)="editBook(book.id)">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="btn btn-sm btn-danger-custom" (click)="deleteBook(book.id, book.title)">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Book Cards (Mobile) -->
+    <div *ngIf="!isLoading && books.length > 0" class="d-md-none">
+      <div *ngFor="let book of books" class="card-custom mb-3 p-3">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div>
+            <h6 class="mb-1" style="font-family: 'Playfair Display', serif; font-weight: 700;">{{ book.title }}</h6>
+            <small style="color: var(--text-secondary)">by {{ book.author }}</small>
+          </div>
+          <span class="badge-custom">{{ book.isbn }}</span>
+        </div>
+        <div class="d-flex gap-3 mb-3" style="font-size: 0.85rem; color: var(--text-secondary);">
+          <span><i class="fa-solid fa-dollar-sign me-1"></i>{{ book.price | number:'1.2-2' }}</span>
+          <span><i class="fa-regular fa-calendar me-1"></i>{{ book.publishedDate | date:'mediumDate' }}</span>
+          <span><i class="fa-solid fa-file-lines me-1"></i>{{ book.pages }} pages</span>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-sm btn-outline-custom flex-grow-1" (click)="editBook(book.id)">
+            <i class="fa-solid fa-pen-to-square me-1"></i>Edit
+          </button>
+          <button class="btn btn-sm btn-danger-custom flex-grow-1" (click)="deleteBook(book.id, book.title)">
+            <i class="fa-solid fa-trash-can me-1"></i>Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

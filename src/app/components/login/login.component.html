@@ -1,0 +1,58 @@
+<div class="auth-container">
+  <div class="auth-card animate-in">
+
+    <!-- Theme toggle -->
+    <div class="text-end mb-3">
+      <button class="theme-toggle-auth" (click)="themeService.toggleTheme()">
+        <i class="fa-solid" [ngClass]="(themeService.isDark$ | async) ? 'fa-sun' : 'fa-moon'"></i>
+      </button>
+    </div>
+
+    <div class="text-center mb-2">
+      <div class="auth-icon">
+        <i class="fa-solid fa-book-open"></i>
+      </div>
+    </div>
+
+    <h2>Welcome Back</h2>
+    <p class="subtitle">Sign in to manage your books and quotes</p>
+
+    <!-- Error Alert -->
+    <div *ngIf="errorMessage" class="alert alert-danger alert-custom d-flex align-items-center" role="alert">
+      <i class="fa-solid fa-circle-exclamation me-2"></i>
+      {{ errorMessage }}
+    </div>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="email" class="form-label">
+          <i class="fa-solid fa-envelope me-1"></i> Email
+        </label>
+        <input type="email" class="form-control" id="email" placeholder="Enter your email"
+               [(ngModel)]="credentials.username" name="username" required>
+      </div>
+
+      <div class="mb-4">
+        <label for="password" class="form-label">
+          <i class="fa-solid fa-lock me-1"></i> Password
+        </label>
+        <input type="password" class="form-control" id="password" placeholder="Enter your password"
+               [(ngModel)]="credentials.password" name="password" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary-custom w-100 py-2" [disabled]="isLoading">
+        <span *ngIf="!isLoading">
+          <i class="fa-solid fa-right-to-bracket me-2"></i>Sign In
+        </span>
+        <span *ngIf="isLoading">
+          <i class="fa-solid fa-spinner fa-spin me-2"></i>Signing in...
+        </span>
+      </button>
+    </form>
+
+    <p class="text-center mt-3 mb-0" style="color: var(--text-secondary); font-size: 0.9rem;">
+      Don't have an account?
+      <a routerLink="/register" class="fw-bold">Create one</a>
+    </p>
+  </div>
+</div>
