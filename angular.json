@@ -39,6 +39,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "allowedHosts": ["all"]
+          },
           "configurations": {
             "production": { "buildTarget": "book-app:build:production" },
             "development": { "buildTarget": "book-app:build:development" }
