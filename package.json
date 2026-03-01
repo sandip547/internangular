@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "serve:ssr:book-app": "node dist/book-app/server/server.mjs"
   },
   "private": true,
   "dependencies": {
@@ -16,7 +17,10 @@
     "@angular/forms": "^20.0.0",
     "@angular/platform-browser": "^20.0.0",
     "@angular/platform-browser-dynamic": "^20.0.0",
+    "@angular/platform-server": "^20.0.0",
     "@angular/router": "^20.0.0",
+    "@angular/ssr": "^20.3.18",
+    "express": "^5.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.6.0",
     "zone.js": "~0.15.0"
@@ -25,6 +29,8 @@
     "@angular-devkit/build-angular": "^20.0.0",
     "@angular/cli": "^20.0.0",
     "@angular/compiler-cli": "^20.0.0",
+    "@types/express": "^5.0.1",
+    "@types/node": "^20.17.19",
     "typescript": "~5.8.0"
   }
 }
